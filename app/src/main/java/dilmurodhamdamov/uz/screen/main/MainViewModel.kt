@@ -3,13 +3,16 @@ package dilmurodhamdamov.uz.screen.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dilmurodhamdamov.uz.api.NetworkClient
 import dilmurodhamdamov.uz.model.PhotoModel
+import dilmurodhamdamov.uz.model.sealed.DataResult
 import dilmurodhamdamov.uz.repository.MainRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class MainViewModel: ViewModel() {
     val repository = MainRepository()
@@ -22,7 +25,16 @@ class MainViewModel: ViewModel() {
     var photoListData: LiveData<List<PhotoModel>> = _photoListData
 
     fun getPhotoList(){
-        repository.getPhotoList(_error, _progress, _photoListData)
+        viewModelScope.launch {
+            when(val result = repository.getPhotoList()){
+                is DataResult.Error -> {
+                    _error.value = result.message
+                }
+                is DataResult.Success -> {
+                    _photoListData.value = (result.result)
+                }
+            }
+        }
     }
 
 }

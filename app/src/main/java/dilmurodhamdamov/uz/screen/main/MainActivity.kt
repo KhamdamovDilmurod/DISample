@@ -11,6 +11,7 @@ import dilmurodhamdamov.uz.databinding.ActivityMainBinding
 import dilmurodhamdamov.uz.model.PhotoModel
 import dilmurodhamdamov.uz.view.PhotoAdapter
 import dilmurodhamdamov.uz.view.PhotoAdapterListener
+import kotlinx.coroutines.GlobalScope
 
 class MainActivity : AppCompatActivity() {
 
