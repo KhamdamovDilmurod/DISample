@@ -1,43 +1,28 @@
 package dilmurodhamdamov.uz.screen.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dilmurodhamdamov.uz.api.NetworkClient
 import dilmurodhamdamov.uz.model.PhotoModel
+import dilmurodhamdamov.uz.repository.MainRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel: ViewModel() {
-    private var compositeDisposable = CompositeDisposable()
+    val repository = MainRepository()
 
-    var error = MutableLiveData<String>()
-    var progress = MutableLiveData<Boolean>()
-    var photoListData = MutableLiveData<List<PhotoModel>>()
+    private var _error = MutableLiveData<String>()
+    var error : LiveData<String> = _error
+    private var _progress = MutableLiveData<Boolean>()
+    var progress: LiveData<Boolean> = _progress
+    private var _photoListData = MutableLiveData<List<PhotoModel>>()
+    var photoListData: LiveData<List<PhotoModel>> = _photoListData
 
     fun getPhotoList(){
-        compositeDisposable.clear()
-        compositeDisposable.add(
-            NetworkClient.getClientInstance().getPhotos()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {  }
-                .doOnComplete {  }
-                .subscribeWith(object: DisposableObserver<List<PhotoModel>>(){
-                    override fun onNext(t: List<PhotoModel>) {
-                        photoListData.value = t
-                    }
-
-                    override fun onError(e: Throwable) {
-                        error.value = e.localizedMessage
-                    }
-
-                    override fun onComplete() {
-                        //
-                    }
-                })
-        )
+        repository.getPhotoList(_error, _progress, _photoListData)
     }
 
 }

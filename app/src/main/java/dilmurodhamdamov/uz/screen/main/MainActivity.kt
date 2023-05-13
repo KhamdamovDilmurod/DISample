@@ -15,8 +15,6 @@ import dilmurodhamdamov.uz.view.PhotoAdapterListener
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: MainViewModel
-    private lateinit var adapter: PhotoAdapter
-
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show()
                 }
             })
+
         }
 
         viewModel.getPhotoList()
