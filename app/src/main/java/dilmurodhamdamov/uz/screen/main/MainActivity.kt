@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show()
                 }
             })
-
         }
 
         viewModel.getPhotoList()

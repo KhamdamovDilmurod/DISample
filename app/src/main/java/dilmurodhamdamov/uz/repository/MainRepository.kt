@@ -14,7 +14,6 @@ import kotlinx.coroutines.withContext
 
 class MainRepository {
     val api = NetworkClient.getClientInstance()
-    var compositeDisposable = CompositeDisposable()
 
     suspend fun getPhotoList() = withContext(Dispatchers.IO){
         try {

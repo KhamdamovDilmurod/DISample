@@ -26,6 +26,7 @@ class MainViewModel: ViewModel() {
 
     fun getPhotoList(){
         viewModelScope.launch {
+            _progress.value = true
             when(val result = repository.getPhotoList()){
                 is DataResult.Error -> {
                     _error.value = result.message
@@ -34,6 +35,7 @@ class MainViewModel: ViewModel() {
                     _photoListData.value = (result.result)
                 }
             }
+            _progress.value = false
         }
     }
 
