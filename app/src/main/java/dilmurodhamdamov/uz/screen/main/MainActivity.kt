@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dilmurodhamdamov.uz.R
 import dilmurodhamdamov.uz.databinding.ActivityMainBinding
 import dilmurodhamdamov.uz.model.PhotoModel
@@ -13,9 +15,10 @@ import dilmurodhamdamov.uz.view.PhotoAdapter
 import dilmurodhamdamov.uz.view.PhotoAdapterListener
 import kotlinx.coroutines.GlobalScope
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         viewModel.error.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()

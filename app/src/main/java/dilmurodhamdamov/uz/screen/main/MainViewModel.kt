@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dilmurodhamdamov.uz.api.NetworkClient
 import dilmurodhamdamov.uz.model.PhotoModel
 import dilmurodhamdamov.uz.model.sealed.DataResult
@@ -13,9 +14,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
-
-class MainViewModel: ViewModel() {
-    val repository = MainRepository()
+import javax.inject.Inject
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: MainRepository): ViewModel() {
 
     private var _error = MutableLiveData<String>()
     var error : LiveData<String> = _error

@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -34,6 +37,12 @@ android {
     buildFeatures{
         viewBinding true
     }
+
+    // Allow references to generated code
+    kapt {
+        correctErrorTypes = true
+    }
+
 }
 
 dependencies {
@@ -58,5 +67,15 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
 
     implementation 'com.github.bumptech.glide:glide:4.15.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    //ktx
+    implementation("androidx.fragment:fragment-ktx:1.5.7")
+    implementation("androidx.activity:activity-ktx:1.7.0")
+
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 }

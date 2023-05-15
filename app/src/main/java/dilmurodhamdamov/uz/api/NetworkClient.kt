@@ -12,9 +12,9 @@ object NetworkClient {
             .addConverterFactory(
                 GsonConverterFactory.create()
             )
-            .addCallAdapterFactory(
-                RxJava3CallAdapterFactory.create()
-            )
+//            .addCallAdapterFactory(
+//                RxJava3CallAdapterFactory.create()
+//            )
             .build()
             .create(Api::class.java)
     }
